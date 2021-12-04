@@ -1,15 +1,30 @@
+import { useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import { OrderDetailsProvider } from './contexts/OrderDetails'
 import OrderEntry from './pages/entry/orderEntry/OrderEntry'
+import OrderConfirmation from './pages/orderConfirmation/OrderConfirmation'
+import OrderSummary from './pages/summary/OrderSummary/OrderSummary'
 function App() {
+  const [orderPhase, setOrderPhase] = useState('inProgress')
+
+  let Component = OrderEntry // default to order page
+  switch (orderPhase) {
+    case 'inProgress':
+      Component = OrderEntry
+      break
+    case 'review':
+      Component = OrderSummary
+      break
+    case 'completed':
+      Component = OrderConfirmation
+      break
+    default:
+  }
+
   return (
-    <Container>
-      <OrderDetailsProvider>
-        {/* Summary page and entry page need provider */}
-        <OrderEntry />
-      </OrderDetailsProvider>
-      {/* Confirmation page does not need provider */}
-    </Container>
+    <OrderDetailsProvider>
+      <Container>{<Component setOrderPhase={setOrderPhase} />}</Container>
+    </OrderDetailsProvider>
   )
 }
 
