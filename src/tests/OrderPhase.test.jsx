@@ -64,7 +64,7 @@ test('order phases for happy path', async () => {
   })
   expect(thankYouHeader).toBeInTheDocument()
 
-  const orderNumber = await screen.findByAltText(/order number/i)
+  const orderNumber = await screen.findByText(/order number/i)
   expect(orderNumber).toBeInTheDocument()
 
   // Click new order button on confirmation page
@@ -72,12 +72,12 @@ test('order phases for happy path', async () => {
   userEvent.click(newOrderButton)
 
   // Check that scoops and toppings subtotals have been reset
-  const scoopsTotal = screen.getByText('Scoops total: $0.00')
+  const scoopsTotal = await screen.findByText('Scoops total: $0.00')
   expect(scoopsTotal).toBeInTheDocument()
   const toppingsTotal = screen.getByText('Toppings total: $0.00')
   expect(toppingsTotal).toBeInTheDocument()
 
   // wait for items to appear so that testing library doesn't get angry
-  // await screen.findByRole('spinbutton', { name: 'Vanilla' })
-  // await screen.findByRole('checkbox', { name: 'Cherries' })
+  await screen.findByRole('spinbutton', { name: 'Vanilla' })
+  await screen.findByRole('checkbox', { name: 'Cherries' })
 })
