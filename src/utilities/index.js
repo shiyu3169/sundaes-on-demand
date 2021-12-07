@@ -11,3 +11,9 @@ export function formatCurrency(amount) {
   }).format(amount)
   return result
 }
+
+export function isScoopInputValid(scoopInput) {
+  return (
+    0 <= scoopInput && scoopInput <= 10 && Math.floor(scoopInput) === scoopInput
+  )
+}

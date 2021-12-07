@@ -1,10 +1,15 @@
+import { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
+import { isScoopInputValid } from '../../../utilities'
 
 export default function ScoopOption({ option, updateItemCount }) {
   const { imagePath, name } = option
+  const [isValid, setIsValid] = useState(true)
 
   const handleChange = (e) => {
     updateItemCount(name, e.target.value)
+    const isValid = isScoopInputValid(parseFloat(e.target.value))
+    setIsValid(isValid)
   }
 
   return (
@@ -27,6 +32,7 @@ export default function ScoopOption({ option, updateItemCount }) {
             type='number'
             defaultValue={0}
             onChange={handleChange}
+            isInvalid={!isValid}
           />
         </Col>
       </Form.Group>
